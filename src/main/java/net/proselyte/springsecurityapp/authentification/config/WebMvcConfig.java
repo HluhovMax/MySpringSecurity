@@ -1,9 +1,7 @@
-package net.proselyte.springsecurityapp.config;
+package net.proselyte.springsecurityapp.authentification.config;
 
-import net.proselyte.springsecurityapp.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

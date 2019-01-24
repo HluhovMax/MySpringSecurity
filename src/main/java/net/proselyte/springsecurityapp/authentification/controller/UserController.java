@@ -1,8 +1,8 @@
-package net.proselyte.springsecurityapp.controller;
+package net.proselyte.springsecurityapp.authentification.controller;
 
-import net.proselyte.springsecurityapp.model.User;
-import net.proselyte.springsecurityapp.service.SecurityService;
-import net.proselyte.springsecurityapp.service.UserService;
+import net.proselyte.springsecurityapp.authentification.model.User;
+import net.proselyte.springsecurityapp.authentification.service.SecurityService;
+import net.proselyte.springsecurityapp.authentification.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

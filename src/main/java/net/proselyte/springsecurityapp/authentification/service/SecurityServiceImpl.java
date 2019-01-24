@@ -1,4 +1,4 @@
-package net.proselyte.springsecurityapp.service;
+package net.proselyte.springsecurityapp.authentification.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,9 +1,9 @@
-package net.proselyte.springsecurityapp.config;
+package net.proselyte.springsecurityapp.authentification.config;
 
 
-import net.proselyte.springsecurityapp.service.SecurityService;
-import net.proselyte.springsecurityapp.service.SecurityServiceImpl;
-import net.proselyte.springsecurityapp.service.UserDetailsServiceImpl;
+import net.proselyte.springsecurityapp.authentification.service.SecurityService;
+import net.proselyte.springsecurityapp.authentification.service.SecurityServiceImpl;
+import net.proselyte.springsecurityapp.authentification.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +17,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.beans.factory.annotation.Value;
-
-import javax.sql.DataSource;
 
 /**
  * Created by 38066 on 22.01.2019.

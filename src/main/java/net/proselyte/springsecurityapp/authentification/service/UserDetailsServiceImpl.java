@@ -1,8 +1,8 @@
-package net.proselyte.springsecurityapp.service;
+package net.proselyte.springsecurityapp.authentification.service;
 
-import net.proselyte.springsecurityapp.dao.UserDao;
-import net.proselyte.springsecurityapp.model.Role;
-import net.proselyte.springsecurityapp.model.User;
+import net.proselyte.springsecurityapp.authentification.dao.UserDao;
+import net.proselyte.springsecurityapp.authentification.model.Role;
+import net.proselyte.springsecurityapp.authentification.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by 38066 on 24.01.2019.

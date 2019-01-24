@@ -1,6 +1,6 @@
-package net.proselyte.springsecurityapp.dao;
+package net.proselyte.springsecurityapp.authentification.dao;
 
-import net.proselyte.springsecurityapp.model.Role;
+import net.proselyte.springsecurityapp.authentification.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

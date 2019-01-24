@@ -1,4 +1,4 @@
-package net.proselyte.springsecurityapp.service;
+package net.proselyte.springsecurityapp.authentification.service;
 
 /**
  * Created by 38066 on 24.01.2019.

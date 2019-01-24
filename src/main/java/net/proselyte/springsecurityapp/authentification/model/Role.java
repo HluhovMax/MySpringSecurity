@@ -1,4 +1,4 @@
-package net.proselyte.springsecurityapp.model;
+package net.proselyte.springsecurityapp.authentification.model;
 
 
 import javax.persistence.*;
