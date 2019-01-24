@@ -17,7 +17,7 @@ public class Department {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToMany
     @JoinTable(name = "department_employee",
             joinColumns = @JoinColumn(name = "department_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id"))

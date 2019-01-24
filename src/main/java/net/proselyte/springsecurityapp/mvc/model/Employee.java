@@ -22,11 +22,10 @@ public class Employee {
     private Date birthday;
     @Column(name = "hire_date")
     private Date hire;
-    @OneToMany
-    @JoinTable(name = "department_employee",
-            joinColumns = @JoinColumn(name = "employee_id"),
-    inverseJoinColumns = @JoinColumn(name = "department_id"))
-    private Department department;
+    @ManyToOne
+    @JoinColumn(name = "department_id",
+    referencedColumnName = "id")
+    private Department departments;
 
     public Employee() {
     }
@@ -71,12 +70,12 @@ public class Employee {
         this.hire = hire;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Department getDepartments() {
+        return departments;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartments(Department departments) {
+        this.departments = departments;
     }
 
     @Override
@@ -87,7 +86,7 @@ public class Employee {
                 ", salary=" + salary +
                 ", birthday=" + birthday +
                 ", hire=" + hire +
-                ", department=" + department +
+                ", departments=" + departments +
                 '}';
     }
 }
