@@ -21,7 +21,7 @@ public class Department {
     private int id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", targetEntity = Employee.class)
     private Set<Employee> employees;
 
     public Department() {

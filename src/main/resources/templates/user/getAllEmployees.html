@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LIST OF EPLOYEES</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script></head>
+</head>
+<body>
+<div class="container">
+    <form action="#" th:action="@{/getAllEmployees}" th:object="${empl}" method="get">
+        <table border="collapse">
+            <tbody th:each="emp : ${empl}" th:remove="tag">
+
+                <tr><td th:text="${emp.id}"><h5>id</h5></td></tr>
+                <tr><td th:text="${emp.name}"><h5>name</h5></td></tr>
+                <tr><td th:text="${emp.salary}"><h5>salary</h5></td></tr>
+                <tr><td th:text="${emp.birthday}"><h5>birthday</h5></td></tr>
+                <tr><td th:text="${emp.hire}"></td><h5>hire</h5></tr>
+                <tr><td th:text="${emp.department}"><h5>department</h5></td></tr>
+
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>

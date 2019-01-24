@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -36,9 +37,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/getAllEmployees")
-    public
-    @ResponseBody
-    List<Employee> getAllEmployees() {
-        return employeeService.getAll();
+    public ModelAndView getAllEmployees() {
+        ModelAndView modelAndView = new ModelAndView("user/getAllEmployees");
+        modelAndView.addObject("empl", employeeService.getAll());
+        return modelAndView;
     }
 }
