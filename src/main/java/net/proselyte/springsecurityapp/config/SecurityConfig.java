@@ -1,13 +1,20 @@
 package net.proselyte.springsecurityapp.config;
 
 
+import net.proselyte.springsecurityapp.service.SecurityService;
+import net.proselyte.springsecurityapp.service.SecurityServiceImpl;
+import net.proselyte.springsecurityapp.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,22 +32,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private DataSource dataSource;
+    UserDetailsServiceImpl userDetailsService;
 
-    @Value("${myapp.queries.users-query}")
-    private String usersQuery;
+//    @Autowired
+//    private DataSource dataSource;
 
-    @Value("${myapp.queries.roles-query}")
-    private String rolesQuery;
+//    @Value("${myapp.queries.users-query}")
+//    private String usersQuery;
+//
+//    @Value("${myapp.queries.roles-query}")
+//    private String rolesQuery;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .jdbcAuthentication()
-                .authoritiesByUsernameQuery(rolesQuery)
-                .usersByUsernameQuery(usersQuery)
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+                .userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+//                .jdbcAuthentication()
+//                .authoritiesByUsernameQuery(rolesQuery)
+//                .usersByUsernameQuery(usersQuery)
+//                .dataSource(dataSource)
+//                .passwordEncoder(bCryptPasswordEncoder);
     }
 
 
@@ -51,13 +62,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/user/**").hasAuthority("ROLE_USER")
-                .antMatchers("/moderator/**").hasAuthority("ROLE_MODERATOR").anyRequest()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN", "MODERATOR")
+                .antMatchers("/moderator/**").hasAuthority("MODERATOR").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/admin-home")
-                .defaultSuccessUrl("/moderator/moderator-home")
+                //.defaultSuccessUrl("/admin/admin-home")
+                //.defaultSuccessUrl("/moderator/moderator-home")
                 .defaultSuccessUrl("/user/user-home")
                 .usernameParameter("username")
                 .passwordParameter("password")
@@ -72,6 +83,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetailsService userDetailsService = new UserDetailsServiceImpl();
+        return userDetailsService;
+    }
+
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public SecurityService securityService() {
+        SecurityService securityService = new SecurityServiceImpl();
+        return securityService;
     }
 
 }

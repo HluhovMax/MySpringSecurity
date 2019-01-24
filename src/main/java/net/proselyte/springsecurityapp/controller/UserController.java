@@ -1,6 +1,7 @@
 package net.proselyte.springsecurityapp.controller;
 
 import net.proselyte.springsecurityapp.model.User;
+import net.proselyte.springsecurityapp.service.SecurityService;
 import net.proselyte.springsecurityapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,10 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private SecurityService securityService;
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -42,13 +46,14 @@ public class UserController {
         User userExists = userService.findByUsername(user.getUsername());
         if (userExists != null) {
             bindingResult
-                    .rejectValue("email", "error.user",
-                            "There is already a user registered with the email provided");
+                    .rejectValue("username", "error.user",
+                            "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         } else {
             userService.save(user);
+            securityService.autoLogin(user.getUsername(), user.getPassword());
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("registration");
@@ -85,7 +90,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByUsername(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUsername() + "!");
-        modelAndView.addObject("moderatorMessage","Content Available Only for Users with User Role");
+        modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
         modelAndView.setViewName("user/user-home");
         return modelAndView;
     }
