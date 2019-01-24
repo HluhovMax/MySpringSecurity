@@ -12,12 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-/**
- * Controller for {@link net.proselyte.springsecurityapp.model.User}'s pages.
- *
- * @author Eugene Suleimanov
- * @version 1.0
- */
+
 
 @Controller
 public class UserController {
