@@ -1,7 +1,10 @@
 package net.proselyte.springsecurityapp.mvc.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  * Created by 38066 on 24.01.2019.
@@ -23,9 +26,8 @@ public class Employee {
     @Column(name = "hire_date")
     private Date hire;
     @ManyToOne
-    @JoinColumn(name = "department_id",
-    referencedColumnName = "id")
-    private Department departments;
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     public Employee() {
     }
@@ -70,12 +72,29 @@ public class Employee {
         this.hire = hire;
     }
 
-    public Department getDepartments() {
-        return departments;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartments(Department departments) {
-        this.departments = departments;
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id &&
+                salary == employee.salary &&
+                Objects.equals(name, employee.name) &&
+                Objects.equals(birthday, employee.birthday) &&
+                Objects.equals(hire, employee.hire);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, salary, birthday, hire);
     }
 
     @Override
@@ -86,7 +105,7 @@ public class Employee {
                 ", salary=" + salary +
                 ", birthday=" + birthday +
                 ", hire=" + hire +
-                ", departments=" + departments +
+                ", department=" + department.getName() +
                 '}';
     }
 }

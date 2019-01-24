@@ -9,6 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * Created by 38066 on 24.01.2019.
@@ -32,5 +36,12 @@ public class DepartmentController {
         }
         departmentService.save(department);
         return "user/user-home";
+    }
+
+    @GetMapping("/getAllDepartments")
+    public ModelAndView getAllDepartments() {
+        ModelAndView modelAndView = new ModelAndView("user/getAllDepartments");
+        modelAndView.addObject("deps", departmentService.getAll());
+        return modelAndView;
     }
 }

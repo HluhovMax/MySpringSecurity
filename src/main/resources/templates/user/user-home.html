@@ -10,9 +10,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script></head>
 </head>
 <body>
+<div class="container">
 <form th:action="@{/getAllEmployees}" method="get">
-    <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
-            th:text="Login">getAll</button>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="GetAllEmp" type="Submit"
+                th:text="GetAllEmp">
+        </button>
 </form>
+    <form th:action="@{/getAllDepartments}" method="get">
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="GetAllDept" type="Submit"
+                th:text="GetAllDept">
+        </button>
+    </form>
+</div>
 </body>
 </html>

@@ -1,12 +1,17 @@
 package net.proselyte.springsecurityapp.mvc.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * Created by 38066 on 24.01.2019.
  */
-
 @Entity
 @Table(name = "department")
 public class Department {
@@ -16,11 +21,7 @@ public class Department {
     private int id;
     @Column(name = "name")
     private String name;
-
-    @ManyToMany
-    @JoinTable(name = "department_employee",
-            joinColumns = @JoinColumn(name = "department_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id"))
+    @OneToMany(mappedBy = "department")
     private Set<Employee> employees;
 
     public Department() {
@@ -48,6 +49,20 @@ public class Department {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return id == that.id &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override
