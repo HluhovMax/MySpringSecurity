@@ -40,12 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-//                .jdbcAuthentication()
-//                .authoritiesByUsernameQuery(rolesQuery)
-//                .usersByUsernameQuery(usersQuery)
-//                .dataSource(dataSource)
-//                .passwordEncoder(bCryptPasswordEncoder);
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
 
@@ -56,14 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/adminAccess", "/admin/admin-home/**").hasRole("ADMIN")
+                .antMatchers("/adminAccess", "/admin/admin-home/**").hasAuthority("ADMIN")
                 .antMatchers("/userAccess").hasAnyAuthority("USER", "ADMIN", "MODERATOR")
                 .antMatchers("/moderatorAccess", "/moderator/moderator-home/**").hasAnyAuthority("MODERATOR", "ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").successHandler(successHandler()).failureUrl("/login?error=true")
-                //.defaultSuccessUrl("/admin/admin-home")
-                //.defaultSuccessUrl("/moderator/moderator-home")
-                //.defaultSuccessUrl("/welcome")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()

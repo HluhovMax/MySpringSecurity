@@ -96,22 +96,4 @@ public class UserController {
         return modelAndView;
     }
 
-//    @GetMapping("/moderatorAccess")
-//    public String moderatorAccess(HttpServletRequest httpServletRequest) {
-//
-//        return "user-home";
-//    }
-
-//    @RequestMapping("/default")
-//    public String adminAccess(HttpServletRequest httpServletRequest) {
-////        if (httpServletRequest.isUserInRole("ADMIN") ||
-////                httpServletRequest.isUserInRole("MODERATOR")) {
-////            return "moderator/moderator-home";
-////        }
-//        if (httpServletRequest.isUserInRole("ADMIN")) {
-//            return "admin/admin-home";
-//        }
-//        return "login";
-//    }
-
 }

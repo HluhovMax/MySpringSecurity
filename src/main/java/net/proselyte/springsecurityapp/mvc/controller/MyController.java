@@ -11,22 +11,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Created by 38066 on 24.01.2019.
  */
 @Controller
-public class DepartmentController {
+public class MyController {
 
     @Autowired
     private DepartmentService departmentService;
     @Autowired
     private EmployeeService employeeService;
+
+    /**================================================================
+     * Departments Controllers
+     * ================================================================
+     * */
 
     @GetMapping("/saveDepartment")
     public String saveDepartment(Model model) {
@@ -43,17 +44,16 @@ public class DepartmentController {
         return "user-home";
     }
 
-    @GetMapping("/getAllDepartmentsForSimpleUser")
+    @GetMapping("/getAllDepartments")
     public ModelAndView getAllDepartments() {
         ModelAndView modelAndView = new ModelAndView("getAllDepartments");
         modelAndView.addObject("deps", departmentService.getAll());
         return modelAndView;
     }
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "welcome-page";
-    }
+    /**
+     * ACCESSING CONTROLLERS
+     * */
 
     @GetMapping("/userAccess")
     public String userAccess() {
@@ -94,7 +94,7 @@ public class DepartmentController {
         return "user-home";
     }
 
-    @GetMapping("/getAllEmployeesForSimpleUser")
+    @GetMapping("/getAllEmployees")
     public ModelAndView getAllEmployees() {
         ModelAndView modelAndView = new ModelAndView("getAllEmployees");
         modelAndView.addObject("empl", employeeService.getAll());
