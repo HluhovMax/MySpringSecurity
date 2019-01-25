@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -31,14 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
-//    @Autowired
-//    private DataSource dataSource;
-
-//    @Value("${myapp.queries.users-query}")
-//    private String usersQuery;
-//
-//    @Value("${myapp.queries.roles-query}")
-//    private String rolesQuery;
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -59,14 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN", "MODERATOR")
-                .antMatchers("/moderator/**").hasAuthority("MODERATOR").anyRequest()
+                .antMatchers("/adminAccess", "/admin/admin-home/**").hasRole("ADMIN")
+                .antMatchers("/userAccess").hasAnyAuthority("USER", "ADMIN", "MODERATOR")
+                .antMatchers("/moderatorAccess", "/moderator/moderator-home/**").hasAnyAuthority("MODERATOR", "ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
+                .loginPage("/login").successHandler(successHandler()).failureUrl("/login?error=true")
                 //.defaultSuccessUrl("/admin/admin-home")
                 //.defaultSuccessUrl("/moderator/moderator-home")
-                .defaultSuccessUrl("/user/user-home")
+                //.defaultSuccessUrl("/welcome")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()

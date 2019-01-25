@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -84,14 +85,33 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/user/user-home", method = RequestMethod.GET)
+    @RequestMapping(value="/user-home", method = RequestMethod.GET)
     public ModelAndView userHome(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByUsername(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUsername() + "!");
         modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
-        modelAndView.setViewName("user/user-home");
+        modelAndView.setViewName("user-home");
         return modelAndView;
     }
+
+//    @GetMapping("/moderatorAccess")
+//    public String moderatorAccess(HttpServletRequest httpServletRequest) {
+//
+//        return "user-home";
+//    }
+
+//    @RequestMapping("/default")
+//    public String adminAccess(HttpServletRequest httpServletRequest) {
+////        if (httpServletRequest.isUserInRole("ADMIN") ||
+////                httpServletRequest.isUserInRole("MODERATOR")) {
+////            return "moderator/moderator-home";
+////        }
+//        if (httpServletRequest.isUserInRole("ADMIN")) {
+//            return "admin/admin-home";
+//        }
+//        return "login";
+//    }
+
 }
