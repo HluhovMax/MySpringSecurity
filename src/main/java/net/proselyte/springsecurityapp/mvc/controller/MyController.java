@@ -2,16 +2,19 @@ package net.proselyte.springsecurityapp.mvc.controller;
 
 import net.proselyte.springsecurityapp.mvc.model.Department;
 import net.proselyte.springsecurityapp.mvc.model.Employee;
+import net.proselyte.springsecurityapp.mvc.model.ID;
 import net.proselyte.springsecurityapp.mvc.service.DepartmentService;
 import net.proselyte.springsecurityapp.mvc.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 38066 on 24.01.2019.
@@ -48,6 +51,21 @@ public class MyController {
     public ModelAndView getAllDepartments() {
         ModelAndView modelAndView = new ModelAndView("getAllDepartments");
         modelAndView.addObject("deps", departmentService.getAll());
+        return modelAndView;
+    }
+
+    @GetMapping("/getDeptById")
+    public String getDeptById(Model model) {
+        model.addAttribute("identifier", new ID());
+        return "identifier";
+    }
+
+    @RequestMapping(value = "/getDeptById", method = RequestMethod.POST, produces = "application/json")
+    public ModelAndView getDeptById(@Valid @ModelAttribute("identifier") ID id) {
+        List<Department> departments = new ArrayList<>();
+        departments.add(departmentService.getById(Integer.parseInt(id.getId())));
+        ModelAndView modelAndView = new ModelAndView("getDeptById");
+        modelAndView.addObject("dep", departments);
         return modelAndView;
     }
 

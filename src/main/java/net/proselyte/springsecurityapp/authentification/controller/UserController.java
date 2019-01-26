@@ -63,37 +63,4 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/admin/admin-home", method = RequestMethod.GET)
-    public ModelAndView adminHome(){
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUsername() + "!");
-        modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("admin/admin-home");
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/moderator/moderator-home", method = RequestMethod.GET)
-    public ModelAndView moderatorHome(){
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUsername() + "!");
-        modelAndView.addObject("moderatorMessage","Content Available Only for Users with Moderator Role");
-        modelAndView.setViewName("moderator/moderator-home");
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/user-home", method = RequestMethod.GET)
-    public ModelAndView userHome(){
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUsername() + "!");
-        modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
-        modelAndView.setViewName("user-home");
-        return modelAndView;
-    }
-
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Dept By Id</title>
+</head>
+<body>
+ <div class="container">
+
+     <form action="#" th:action="@{/getDeptById}" th:object="${dep}" method="post">
+         <table border="collapse">
+             <tbody th:each="d : ${dep}">
+
+             <tr><td th:text="${d.id}">...</td></tr>
+             <tr><td th:text="${d.name}">...</td></tr>
+             <tr><td th:text="${d.employees}" ><br/>...</td><br/></tr>
+
+             </tbody>
+         </table>
+     </form>
+
+ </div>
+</body>
+</html>
