@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Success Delete</title>
+</head>
+<body>
+<h2>Successfully Deleted</h2>
+<form th:action="@{/getAllDepartments}" method="get">
+    <button class="button button1">getAllDepartments</button>
+</form>
+<form th:action="@{/getAllEmployees}" method="get">
+    <button class="button button2">getAllEmployees</button>
+</form>
+</body>
+</html>
