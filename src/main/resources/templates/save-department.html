@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>save-department</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script></head>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form th:action="@{/saveDepartment}" th:object="${saveDepartment}" method="post"
+                  class="form-horizontal"
+                  role="form">
+                <h2>Saving Form</h2>
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" th:field="*{name}"></td>
+                    </tr>
+                    <tr>
+                        <td>Employees</td>
+                        <td>
+                            <th:block th:each="employee: ${employees}">
+                                <input type="checkbox" name="cers" th:value="${employee.id}"/>
+                                <label th:text="${employee.name}" />
+                            </th:block>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

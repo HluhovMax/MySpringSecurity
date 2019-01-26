@@ -5,7 +5,9 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Created by 38066 on 24.01.2019.
@@ -27,19 +29,12 @@ public class Employee {
     @Column(name = "hire_date")
     private Date hire;
     @EqualsAndHashCode.Exclude
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
+    @ManyToMany(mappedBy = "employees")
+    private Set<Department> department;
 
-    @Override
-    public String toString() {
-        return "\nEmployee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                ", birthday=" + birthday +
-                ", hire=" + hire +
-                ", department=" + department.getName() +
-                '}';
+    public Employee() {
+        if (department == null) {
+            department = new HashSet<>();
+        }
     }
 }

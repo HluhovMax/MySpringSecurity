@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -20,6 +21,24 @@ public class Department {
     @Column(name = "name")
     private String name;
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "department", targetEntity = Employee.class)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "dept_empl",
+    joinColumns = {@JoinColumn(name = "department_id")},
+    inverseJoinColumns = {@JoinColumn(name = "employee_id")})
     private Set<Employee> employees;
+
+    public Department() {
+        if (employees == null) {
+            employees = new HashSet<>();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", employees.size=" + employees.size() +
+                '}';
+    }
 }

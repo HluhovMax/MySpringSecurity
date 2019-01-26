@@ -43,17 +43,18 @@ public class MyController {
     @GetMapping("/saveDepartment")
     public String saveDepartment(Model model) {
         model.addAttribute("saveDepartment", new Department());
+        model.addAttribute("employees", employeeService.getAll());
         return "save-department";
     }
 
-    @PostMapping("/saveDepartment")
-    public String saveDepartment(@ModelAttribute("saveDepartment") Department department, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "save-department";
-        }
-        departmentService.save(department);
-        return "user-home";
-    }
+//    @PostMapping("/saveDepartment")
+//    public String saveDepartment(@ModelAttribute("saveDepartment") Department department, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "save-department";
+//        }
+//        departmentService.save(department);
+//        return "user-home";
+//    }
 
     @GetMapping("/getAllDepartments")
     public ModelAndView getAllDepartments() {
