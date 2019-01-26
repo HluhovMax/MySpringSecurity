@@ -57,10 +57,10 @@ public class MyController {
     @GetMapping("/getDeptById")
     public String getDeptById(Model model) {
         model.addAttribute("identifier", new ID());
-        return "identifier";
+        return "deptIdentifier";
     }
 
-    @RequestMapping(value = "/getDeptById", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/getDeptById", method = RequestMethod.POST)
     public ModelAndView getDeptById(@Valid @ModelAttribute("identifier") ID id) {
         List<Department> departments = new ArrayList<>();
         departments.add(departmentService.getById(Integer.parseInt(id.getId())));
@@ -69,33 +69,10 @@ public class MyController {
         return modelAndView;
     }
 
-    /**
-     * ACCESSING CONTROLLERS
-     * */
-
-    @GetMapping("/userAccess")
-    public String userAccess() {
-        return "user/user-home";
-    }
-
-    @GetMapping("/moderatorAccess")
-    public String moderatorAccess() {
-        return "moderator/moderator-home";
-    }
-
-    @GetMapping("/adminAccess")
-    public String adminAccess() {
-        return "admin/admin-home";
-    }
-
-
-
     /**================================================================
      * Employees Controllers
      * ================================================================
      * */
-
-
 
     @GetMapping("/saveEmployee")
     public String saveEmployee(Model model) {
@@ -117,5 +94,39 @@ public class MyController {
         ModelAndView modelAndView = new ModelAndView("getAllEmployees");
         modelAndView.addObject("empl", employeeService.getAll());
         return modelAndView;
+    }
+
+    @GetMapping("/getEmplById")
+    public String getEmplById(Model model) {
+        model.addAttribute("identifier", new ID());
+        return "emplIdentifier";
+    }
+
+    @PostMapping("/getEmplById")
+    public ModelAndView getEmplById(@Valid @ModelAttribute("identifier") ID id) {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employeeService.getById(Integer.parseInt(id.getId())));
+        ModelAndView modelAndView = new ModelAndView("getEmplById");
+        modelAndView.addObject("employees", employees);
+        return modelAndView;
+    }
+
+    /**
+     * ACCESSING CONTROLLERS
+     * */
+
+    @GetMapping("/userAccess")
+    public String userAccess() {
+        return "user/user-home";
+    }
+
+    @GetMapping("/moderatorAccess")
+    public String moderatorAccess() {
+        return "moderator/moderator-home";
+    }
+
+    @GetMapping("/adminAccess")
+    public String adminAccess() {
+        return "admin/admin-home";
     }
 }
