@@ -5,9 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by 38066 on 24.01.2019.
@@ -30,11 +28,11 @@ public class Employee {
     private Date hire;
     @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "employees")
-    private Set<Department> department;
+    private List<Department> department;
 
     public Employee() {
         if (department == null) {
-            department = new HashSet<>();
+            department = new ArrayList<>();
         }
     }
 }

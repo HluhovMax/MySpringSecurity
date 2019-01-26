@@ -47,14 +47,25 @@ public class MyController {
         return "save-department";
     }
 
-//    @PostMapping("/saveDepartment")
-//    public String saveDepartment(@ModelAttribute("saveDepartment") Department department, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "save-department";
-//        }
-//        departmentService.save(department);
-//        return "user-home";
-//    }
+    @PostMapping("/saveDepartment")
+    public String saveDepartment(@ModelAttribute("saveDepartment") Department department,
+                                 @RequestParam(value = "cers", required = false)
+                                         int[] cers, BindingResult bindingResult,
+                                 Model model) {
+        if (cers != null) {
+            Employee employee = null;
+            for (int i = 0; i < cers.length; i++) {
+                if (employeeRepository.existsById(cers[i])) {
+                    employee = new Employee();
+                    employee.setId(cers[i]);
+                    department.getEmployees().add(employee);
+                }
+            }
+            departmentService.save(department);
+            return "successfully";
+        }
+        return "save-department";
+    }
 
     @GetMapping("/getAllDepartments")
     public ModelAndView getAllDepartments() {
@@ -90,7 +101,7 @@ public class MyController {
         if (departmentRepository.existsById(Integer.parseInt(id.getId()))) {
             return "deptDeleter";
         }
-        return "successfullyDeleted";
+        return "successfully";
     }
 
     /**================================================================
@@ -147,7 +158,7 @@ public class MyController {
         if (employeeRepository.existsById(Integer.parseInt(id.getId()))) {
             return "emplDeleter";
         }
-        return "successfullyDeleted";
+        return "successfully";
     }
 
     /**

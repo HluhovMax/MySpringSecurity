@@ -27,12 +27,17 @@
                         <td>Employees</td>
                         <td>
                             <th:block th:each="employee: ${employees}">
-                                <input type="checkbox" name="cers" th:value="${employee.id}"/>
+                                <input th:type="checkbox" name="cers" th:value="${employee.id}"/>
                                 <label th:text="${employee.name}" />
                             </th:block>
                         </td>
                     </tr>
                 </table>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">Save Dept</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

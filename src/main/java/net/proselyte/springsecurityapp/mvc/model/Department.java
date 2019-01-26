@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,11 +27,11 @@ public class Department {
     @JoinTable(name = "dept_empl",
     joinColumns = {@JoinColumn(name = "department_id")},
     inverseJoinColumns = {@JoinColumn(name = "employee_id")})
-    private Set<Employee> employees;
+    private List<Employee> employees;
 
     public Department() {
         if (employees == null) {
-            employees = new HashSet<>();
+            employees = new ArrayList<>();
         }
     }
 
