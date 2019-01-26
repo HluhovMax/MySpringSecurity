@@ -4,6 +4,7 @@ import net.proselyte.springsecurityapp.mvc.model.Department;
 import net.proselyte.springsecurityapp.mvc.model.Employee;
 import net.proselyte.springsecurityapp.mvc.model.ID;
 import net.proselyte.springsecurityapp.mvc.repository.DepartmentRepository;
+import net.proselyte.springsecurityapp.mvc.repository.EmployeeRepository;
 import net.proselyte.springsecurityapp.mvc.service.DepartmentService;
 import net.proselyte.springsecurityapp.mvc.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class MyController {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     /**================================================================
      * Departments Controllers
@@ -128,6 +132,21 @@ public class MyController {
         ModelAndView modelAndView = new ModelAndView("getEmplById");
         modelAndView.addObject("employees", employees);
         return modelAndView;
+    }
+
+    @GetMapping("/deleteEmplById")
+    public String deleteEmplById(Model model) {
+        model.addAttribute("deleter", new ID());
+        return "emplDeleter";
+    }
+
+    @PostMapping("/deleteEmplById")
+    public String deleteEmplById(@Valid @ModelAttribute("deleter") ID id) {
+        employeeService.delete(Integer.parseInt(id.getId()));
+        if (employeeRepository.existsById(Integer.parseInt(id.getId()))) {
+            return "emplDeleter";
+        }
+        return "successfullyDeleted";
     }
 
     /**
