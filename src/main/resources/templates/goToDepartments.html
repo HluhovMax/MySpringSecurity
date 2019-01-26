@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ADMIN HOME PAGE</title>
+    <title>Page for Departments</title>
     <style>
 
         .button {
@@ -46,14 +46,24 @@
 
     </style>
 </head>
-<body >
-<div class="col">
-    <form th:action="@{/goToEmployees}" method="get">
-        <button class="button button1">goToEmployees</button>
-    </form>
-    <form th:action="@{/goToDepartments}" method="get">
-        <button class="button button2">goToDepartments</button>
-    </form>
-</div>
+<body>
+<form th:action="@{/getAllDepartments}" method="get">
+    <button class="button button2">getAllDepartments</button>
+</form>
+<form th:action="@{/getDeptById}"  method="get">
+    <button class="button button2">getDeptById</button>
+</form>
+
+<form th:action="@{/deleteDeptById}"  method="get">
+    <button class="button button2">deleteDeptById</button>
+</form>
+
+<form th:action="@{/saveDepartment}"  method="get">
+    <button class="button button2">saveDept</button>
+</form>
+
+<form th:action="@{/updateDepartment}"  method="get">
+    <button class="button button2">updateDepartment</button>
+</form>
 </body>
 </html>

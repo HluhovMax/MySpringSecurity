@@ -48,29 +48,11 @@
 </head>
 <body>
     <div class="col">
-        <form th:action="@{/getAllEmployees}" method="get">
-            <button class="button button2">getAllEmployees</button>
+        <form th:action="@{/goToEmployees}" method="get">
+            <button class="button button1">goToEmployees</button>
         </form>
-        <form th:align="center" th:action="@{/getAllDepartments}" method="get">
-            <button class="button button1">getAllDepartments</button>
-        </form>
-        <br/>
-        <form th:action="@{/getDeptById}"  method="get">
-            <button class="button button2">getDeptById</button>
-        </form>
-        <form th:action="@{/getEmplById}"  method="get">
-            <button class="button button1">getEmplById</button>
-        </form>
-        <br/>
-        <form th:action="@{/deleteDeptById}"  method="get">
-            <button class="button button2">deleteDeptById</button>
-        </form>
-        <form th:action="@{/deleteEmplById}"  method="get">
-            <button class="button button1">deleteEmplById</button>
-        </form>
-        <br/>
-        <form th:action="@{/saveDepartment}"  method="get">
-            <button class="button button2">saveDept</button>
+        <form th:action="@{/goToDepartments}" method="get">
+            <button class="button button2">goToDepartments</button>
         </form>
     </div>
 </body>

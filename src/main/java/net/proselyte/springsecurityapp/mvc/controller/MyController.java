@@ -35,10 +35,38 @@ public class MyController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    /**================================================================
+    /**
+     * ================================================================
      * Departments Controllers
      * ================================================================
-     * */
+     */
+
+    @GetMapping("/updateDepartment")
+    public String updateDepartment(Model model) {
+        model.addAttribute("updateDepartment", new Department());
+        model.addAttribute("employees", employeeService.getAll());
+        model.addAttribute("departments", departmentService.getAll());
+        return "update-department";
+    }
+
+    @PostMapping("/updateDepartment")
+    public String updateDepartment(@ModelAttribute("updateDepartment") Department department,
+                                   @RequestParam(value = "cers", required = false)
+                                           int[] cers) {
+        if (cers != null) {
+            Employee employee = null;
+            for (int i = 0; i < cers.length; i++) {
+                if (employeeRepository.existsById(cers[i])) {
+                    employee = new Employee();
+                    employee.setId(cers[i]);
+                    department.getEmployees().add(employee);
+                }
+            }
+            departmentService.update(department);
+            return "successfully";
+        }
+        return "update-department";
+    }
 
     @GetMapping("/saveDepartment")
     public String saveDepartment(Model model) {
@@ -50,8 +78,7 @@ public class MyController {
     @PostMapping("/saveDepartment")
     public String saveDepartment(@ModelAttribute("saveDepartment") Department department,
                                  @RequestParam(value = "cers", required = false)
-                                         int[] cers, BindingResult bindingResult,
-                                 Model model) {
+                                         int[] cers) {
         if (cers != null) {
             Employee employee = null;
             for (int i = 0; i < cers.length; i++) {
@@ -104,10 +131,29 @@ public class MyController {
         return "successfully";
     }
 
-    /**================================================================
+    /**
+     * ================================================================
      * Employees Controllers
      * ================================================================
-     * */
+     */
+
+
+    @GetMapping("/updateEmployee")
+    public String updateEmployee(Model model) {
+        model.addAttribute("updateEmployee", new Employee());
+        model.addAttribute("employees", employeeService.getAll());
+        return "update-employee";
+    }
+
+    @PostMapping("/updateEmployee")
+    public String updateEmployee(@ModelAttribute("updateEmployee") Employee employee) {
+        if (employee != null) {
+            employeeService.update(employee);
+            return "successfully";
+        }
+        return "save-employee";
+    }
+
 
     @GetMapping("/saveEmployee")
     public String saveEmployee(Model model) {
@@ -116,12 +162,12 @@ public class MyController {
     }
 
     @PostMapping("/saveEmployee")
-    public String saveEmployee(@ModelAttribute("saveEmployee") Employee employee, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "save-employee";
+    public String saveEmployee(@ModelAttribute("saveEmployee") Employee employee) {
+        if (employee != null) {
+            employeeService.save(employee);
+            return "successfully";
         }
-        employeeService.save(employee);
-        return "user-home";
+        return "save-employee";
     }
 
     @GetMapping("/getAllEmployees")
@@ -178,5 +224,15 @@ public class MyController {
     @GetMapping("/adminAccess")
     public String adminAccess() {
         return "admin/admin-home";
+    }
+
+    @GetMapping("/goToDepartments")
+    public String goToDepartments() {
+        return "goToDepartments";
+    }
+
+    @GetMapping("/goToEmployees")
+    public String goToEmployees() {
+        return "goToEmployees";
     }
 }

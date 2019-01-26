@@ -4,21 +4,26 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>save-department</title>
+    <title>Update Department</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script></head>
+
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form th:action="@{/saveDepartment}" th:object="${saveDepartment}" method="post"
+            <form th:action="@{/updateDepartment}" th:object="${updateDepartment}" method="post"
                   class="form-horizontal"
                   role="form">
-                <h2>Saving Form</h2>
+                <h2>Update Form</h2>
                 <table>
+                    <tr>
+                        <td>Id </td>
+                        <td><input type="number" th:field="*{id}"></td>
+                    </tr>
                     <tr>
                         <td>Name </td>
                         <td><input type="text" th:field="*{name}"></td>
@@ -33,6 +38,21 @@
                         </td>
                     </tr>
                 </table>
+                <table>
+                    <tr>
+                        <tbody th:each="dep : ${departments}" th:remove="tag">
+
+                        <tr><td th:text="${dep.id}">...</td></tr>
+                        <tr><td th:text="${dep.name}">...</td></tr>
+                        <tr><td th:text="${dep.employees}">...</td><br/><br/></tr>
+
+                        </tbody>
+                    </tr>
+                    <br/>
+                    <br/>
+                    <br/>
+                </table>
+                <br/>
                 <div class="form-group">
                     <div class="col-sm-9">
                         <button type="submit" class="btn btn-primary btn-block">Save Dept</button>
