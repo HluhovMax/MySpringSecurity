@@ -28,11 +28,11 @@ public class Employee {
     private Date hire;
     @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "employees")
-    private List<Department> department;
+    private Set<Department> department;
 
     public Employee() {
         if (department == null) {
-            department = new ArrayList<>();
+            department = new HashSet<>();
         }
     }
 }

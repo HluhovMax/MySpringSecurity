@@ -23,15 +23,15 @@ public class Department {
     @Column(name = "name")
     private String name;
     @EqualsAndHashCode.Exclude
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "dept_empl",
     joinColumns = {@JoinColumn(name = "department_id")},
     inverseJoinColumns = {@JoinColumn(name = "employee_id")})
-    private List<Employee> employees;
+    private Set<Employee> employees;
 
     public Department() {
         if (employees == null) {
-            employees = new ArrayList<>();
+            employees = new HashSet<>();
         }
     }
 
