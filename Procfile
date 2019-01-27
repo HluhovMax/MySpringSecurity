@@ -1,1 +1,1 @@
-web: java -jar target/SpringSecurityApp-1.0.jar
+web: java -jar target/SpringSecurityApp.jar
