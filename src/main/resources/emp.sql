@@ -9,16 +9,14 @@ CREATE TABLE employee(
   name VARCHAR(30),
   salary int,
   birthday DATE,
-  hire_date DATE,
-  department_id INT,
-  FOREIGN KEY (department_id) REFERENCES department(id)
-);
+  hire_date DATE
+  );
 
 
 
-CREATE TABLE department_employee(
-  department_id INT,
-  employee_id INT,
-  FOREIGN KEY (department_id) REFERENCES department(id),
-  FOREIGN KEY (employee_id) REFERENCES employee(id)
-);
+# CREATE TABLE dept_empl(
+#   department_id INT,
+#   employee_id INT,
+#   FOREIGN KEY (department_id) REFERENCES department(id),
+#   FOREIGN KEY (employee_id) REFERENCES employee(id)
+# );
