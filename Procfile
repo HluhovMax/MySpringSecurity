@@ -1,1 +1,1 @@
-web: java -jar target/SpringSecurityApp.jar
+web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.jar
