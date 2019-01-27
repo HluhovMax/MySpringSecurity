@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GET EMPL BY ID</title>
+
+</head>
+<body>
+
+<div class="container">
+
+    <form action="#" th:action="@{/getUserById}" th:object="${users}" method="post">
+        <table border="collapse">
+            <tbody th:each="e : ${users}">
+
+            <tr><td th:text="${e.id}">...</td></tr>
+            <tr><td th:text="${e.username}">...</td></tr>
+            <tr><td th:text="${e.roles}" >...</td></tr>
+
+
+            </tbody>
+        </table>
+        <br/>
+
+    </form>
+
+</div>
+
+</body>
+</html>

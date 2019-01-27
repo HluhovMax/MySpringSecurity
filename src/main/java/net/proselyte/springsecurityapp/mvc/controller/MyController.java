@@ -1,5 +1,8 @@
 package net.proselyte.springsecurityapp.mvc.controller;
 
+import net.proselyte.springsecurityapp.authentification.model.User;
+import net.proselyte.springsecurityapp.authentification.service.SecurityService;
+import net.proselyte.springsecurityapp.authentification.service.UserServiceImpl;
 import net.proselyte.springsecurityapp.mvc.model.Department;
 import net.proselyte.springsecurityapp.mvc.model.Employee;
 import net.proselyte.springsecurityapp.mvc.model.ID;
@@ -7,6 +10,7 @@ import net.proselyte.springsecurityapp.mvc.repository.DepartmentRepository;
 import net.proselyte.springsecurityapp.mvc.repository.EmployeeRepository;
 import net.proselyte.springsecurityapp.mvc.service.DepartmentService;
 import net.proselyte.springsecurityapp.mvc.service.EmployeeService;
+import net.proselyte.springsecurityapp.mvc.service.impl.AnotherUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,16 +28,30 @@ import java.util.List;
 @Controller
 public class MyController {
 
-    @Autowired
     private DepartmentService departmentService;
-    @Autowired
     private EmployeeService employeeService;
-
-    @Autowired
     private DepartmentRepository departmentRepository;
+    private EmployeeRepository employeeRepository;
+    private AnotherUserService anotherUserService;
+    private UserServiceImpl userService;
+    private SecurityService securityService;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    public MyController(DepartmentService departmentService,
+                        EmployeeService employeeService,
+                        DepartmentRepository departmentRepository,
+                        EmployeeRepository employeeRepository,
+                        AnotherUserService anotherUserService,
+                        UserServiceImpl userService,
+                        SecurityService securityService) {
+        this.departmentService = departmentService;
+        this.employeeService = employeeService;
+        this.departmentRepository = departmentRepository;
+        this.employeeRepository = employeeRepository;
+        this.anotherUserService = anotherUserService;
+        this.userService = userService;
+        this.securityService = securityService;
+    }
 
     /**
      * ================================================================
@@ -205,6 +223,83 @@ public class MyController {
             return "emplDeleter";
         }
         return "successfully";
+    }
+
+    /**
+     * USERS CONTROLLERS
+     */
+
+    @GetMapping("/goToOnlyAdminAccess")
+    public String goToOnlyAdminAccess() {
+        return "onlyAdminAccess";
+    }
+
+    @GetMapping("/getAllUsers")
+    public ModelAndView getAllUsers() {
+        ModelAndView modelAndView = new ModelAndView("getAllUsers");
+        modelAndView.addObject("users", anotherUserService.getAll());
+        return modelAndView;
+    }
+
+    @GetMapping("/getUserById")
+    public String getUserById(Model model) {
+        model.addAttribute("identifier", new ID());
+        return "userIdentifier";
+    }
+
+    @PostMapping("/getUserById")
+    public ModelAndView getUserById(@Valid @ModelAttribute("identifier") ID id) {
+        List<User> users = new ArrayList<>();
+        users.add(anotherUserService.getById(Integer.parseInt(id.getId())));
+        ModelAndView modelAndView = new ModelAndView("getUserById");
+        modelAndView.addObject("users", users);
+        return modelAndView;
+    }
+
+    @GetMapping("/deleteUserById")
+    public String deleteUserById(Model model) {
+        model.addAttribute("deleter", new ID());
+        return "userDeleter";
+    }
+
+    @PostMapping("/deleteUserById")
+    public String deleteUserById(@Valid @ModelAttribute("deleter") ID id) {
+        anotherUserService.delete(Integer.parseInt(id.getId()));
+        if (anotherUserService.existsById(Integer.parseInt(id.getId()))) {
+            return "userDeleter";
+        }
+        return "SUCCESS";
+    }
+
+    @GetMapping("/saveUser")
+    public String saveUser(Model model) {
+        model.addAttribute("save", new User());
+        return "save-user";
+    }
+
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("save") User user) {
+        if (user != null) {
+            userService.save(user);
+            return "SUCCESS";
+        }
+        return "save-user";
+    }
+
+    @GetMapping("/updateUser")
+    public String updateUser(Model model) {
+        model.addAttribute("update", new User());
+        model.addAttribute("users", anotherUserService.getAll());
+        return "update-user";
+    }
+
+    @PostMapping("/updateUser")
+    public String updateUser(@ModelAttribute("update") User user) {
+        if (user != null) {
+            userService.save(user);
+            return "SUCCESS";
+        }
+        return "update-user";
     }
 
     /**

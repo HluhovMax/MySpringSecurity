@@ -5,25 +5,24 @@ import net.proselyte.springsecurityapp.authentification.dao.UserDao;
 import net.proselyte.springsecurityapp.authentification.model.Role;
 import net.proselyte.springsecurityapp.authentification.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
-    private RoleDao roleDao;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDao = userDao;
-        this.roleDao = roleDao;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+    private UserDao userDao;
+    @Autowired
+    private RoleDao roleDao;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Override
     public void save(User user) {

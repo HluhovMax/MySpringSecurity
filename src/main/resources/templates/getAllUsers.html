@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get All Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script></head>
+
+</head>
+<body>
+<div class="container">
+    <form action="#" th:action="@{/getAllUsers}" th:object="${users}" method="get">
+        <table border="collapse">
+            <tbody th:each="u : ${users}" th:remove="tag">
+            <tr><td th:text="${u.id}">.../td></tr>
+            <tr><td th:text="${u.username}">.../td></tr>
+            <tr><td th:text="${u.roles}">.../td></tr>
+            </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
